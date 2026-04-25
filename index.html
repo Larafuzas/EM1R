@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Manual beurer EM1R Relief+</title>
+    
+    <link rel="apple-touch-icon" href="icono.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Manual EM1R">
+
     <style>
         :root {
             --primary: #c24d67;
@@ -17,12 +23,13 @@
         body {
             font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             margin: 0; background: var(--bg); color: var(--secondary); line-height: 1.6;
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* --- Header y Buscador --- */
         header {
             position: fixed; top: 0; width: 100%; background: var(--white);
-            z-index: 1000; box-shadow: var(--shadow); padding: 10px 0;
+            z-index: 1000; box-shadow: var(--shadow); padding: 12px 0;
         }
         .header-container { display: flex; align-items: center; padding: 0 15px; gap: 10px; max-width: 800px; margin: auto; }
         #search-input { flex-grow: 1; padding: 12px; border: 1px solid #ddd; border-radius: 25px; font-size: 16px; outline: none; }
@@ -37,28 +44,30 @@
         #sidebar.active { left: 0; }
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1050; }
         #sidebar ul { list-style: none; padding: 0; }
-        #sidebar li { padding: 15px 20px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 14px; }
-        #sidebar li:hover { background: #fff5f7; color: var(--primary); }
+        #sidebar li { padding: 15px 20px; border-bottom: 1px solid #eee; cursor: pointer; font-size: 14px; font-weight: 500; }
+        #sidebar li:active { background: #fff5f7; color: var(--primary); }
 
         /* --- Contenido Principal --- */
-        main { margin-top: 85px; padding: 15px; max-width: 850px; margin-left: auto; margin-right: auto; }
+        main { margin-top: 90px; padding: 15px; max-width: 850px; margin-left: auto; margin-right: auto; padding-bottom: 50px; }
         section { background: var(--white); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         
         h1, h2, h3 { color: var(--primary); margin-top: 0; }
+        p { font-size: 15px; }
+        
         .doctor-box { border: 2px solid var(--accent); background: #ebf5fb; padding: 15px; border-radius: 8px; }
         
         /* --- Imágenes --- */
-        .img-container { text-align: center; margin: 20px 0; background: #fff; padding: 10px; border-radius: 8px; }
+        .img-container { text-align: center; margin: 20px 0; background: #fff; padding: 10px; border-radius: 8px; border: 1px solid #eee; }
         .img-container img { max-width: 100%; height: auto; border-radius: 5px; }
-        .caption { font-size: 12px; color: #666; margin-top: 5px; font-style: italic; }
+        .caption { font-size: 12px; color: #666; margin-top: 8px; font-style: italic; }
 
         /* --- Tablas --- */
-        .table-wrapper { overflow-x: auto; margin: 15px 0; }
-        table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        th { background: var(--primary); color: white; padding: 10px; text-align: left; position: sticky; top: 0; }
-        td { padding: 10px; border-bottom: 1px solid #eee; }
+        .table-wrapper { overflow-x: auto; margin: 15px 0; border-radius: 8px; border: 1px solid #eee; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 400px; }
+        th { background: var(--primary); color: white; padding: 12px; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid #eee; }
         tr:nth-child(even) { background: #fafafa; }
-        .btn-link { color: var(--accent); text-decoration: underline; cursor: pointer; }
+        .btn-link { color: var(--accent); text-decoration: underline; cursor: pointer; font-weight: bold; }
 
         .hidden { display: none !important; }
     </style>
@@ -68,65 +77,63 @@
     <header>
         <div class="header-container">
             <button class="menu-btn" onclick="toggleMenu()">☰</button>
-            <input type="text" id="search-input" placeholder="Buscar programa, síntoma o uso..." onkeyup="filterContent()">
+            <input type="text" id="search-input" placeholder="Buscar síntoma, programa o uso..." onkeyup="filterContent()">
         </div>
     </header>
 
     <div id="sidebar">
-        <h3 style="padding: 20px; margin: 0;">Menú Manual</h3>
+        <h3 style="padding: 20px; margin: 0; color: var(--primary);">Manual EM1R</h3>
         <ul>
-            <li onclick="scrollToSec('introduccion')">Introducción y Modos</li>
-            <li onclick="scrollToSec('uso-aparato')">Guía de Uso Paso a Paso</li>
-            <li onclick="scrollToSec('interfaz')">Interfaz y Botones (Esquema)</li>
-            <li onclick="scrollToSec('colocacion')">Colocación de Electrodos</li>
-            <li onclick="scrollToSec('tabla-tens')">Tabla TENS (Dolor)</li>
-            <li onclick="scrollToSec('tabla-ems')">Tabla EMS (Músculo)</li>
-            <li onclick="scrollToSec('tabla-masaje')">Tabla Masaje (Relajación)</li>
-            <li onclick="scrollToSec('doctor-mode')">Doctor's Mode</li>
+            <li onclick="scrollToSec('introduccion')">1. Introducción y Modos</li>
+            <li onclick="scrollToSec('uso-aparato')">2. Guía de Uso Paso a Paso</li>
+            <li onclick="scrollToSec('interfaz')">3. Interfaz y Botones (Imagen)</li>
+            <li onclick="scrollToSec('colocacion')">4. Colocación de Electrodos</li>
+            <li onclick="scrollToSec('tabla-tens')">5. Tabla TENS (Dolor)</li>
+            <li onclick="scrollToSec('tabla-ems')">6. Tabla EMS (Músculo)</li>
+            <li onclick="scrollToSec('tabla-masaje')">7. Tabla Masaje (Relajación)</li>
+            <li onclick="scrollToSec('doctor-mode')">8. Doctor's Mode</li>
         </ul>
     </div>
     <div class="overlay" onclick="toggleMenu()"></div>
 
-    <main>
+    <main id="main-content">
 
         <section id="introduccion">
             <h2>1. Modos de Funcionamiento</h2>
-            <p>El <strong>beurer EM1R Relief+</strong> dispone de tres funciones básicas que pueden combinarse según la necesidad:</p>
+            <p>El <strong>beurer EM1R Relief+</strong> integra tres tecnologías fundamentales para la salud y el bienestar:</p>
             <ul>
-                <li><strong>TENS (Estimulación Nerviosa Transcutánea):</strong> Bloquea la transmisión del dolor a través de las fibras nerviosas. Ideal para dolores crónicos y agudos.</li>
-                <li><strong>EMS (Estimulación Muscular Eléctrica):</strong> Provoca contracciones musculares para fortalecer (entrenamiento), tonificar o acelerar la recuperación post-esfuerzo.</li>
-                <li><strong>Masaje:</strong> Simula un masaje real mediante impulsos eléctricos para relajar músculos tensos y reducir la fatiga.</li>
+                <li><strong>TENS:</strong> Alivio del dolor mediante impulsos que bloquean la señal nerviosa. Úselo para dolores de espalda, menstruales o articulares.</li>
+                <li><strong>EMS:</strong> Estimulación muscular para fortalecer grupos específicos, recuperar tras el deporte o calentar el músculo.</li>
+                <li><strong>Masaje:</strong> Programas de relajación para soltar contracturas y eliminar la sensación de fatiga.</li>
             </ul>
         </section>
 
         <section id="uso-aparato">
             <h2>2. Guía de Uso Paso a Paso</h2>
             <ol>
-                <li><strong>Preparación:</strong> Limpie la zona de la piel. Conecte los cables a los electrodos y pegue estos a la piel (ver <span class="btn-link" onclick="scrollToSec('colocacion')">Mapa de Colocación</span>).</li>
-                <li><strong>Encendido:</strong> Pulse el botón de encendido.</li>
-                <li><strong>Selección de Modo:</strong> Pulse <strong>MENU</strong> para navegar entre TENS/EMS/MASSAGE.</li>
-                <li><strong>Selección de Programa:</strong> Use las flechas para elegir el número de programa (ej. P01). Confirme con <strong>ENTER</strong>.</li>
-                <li><strong>Intensidad:</strong> El tratamiento no comienza hasta que suba la intensidad con los botones <strong>+/-</strong>.</li>
-                <li><strong>Doctor's Mode:</strong> Vea cómo activar su configuración personalizada en la sección inferior.</li>
+                <li><strong>Preparación:</strong> Limpie la piel. Coloque los electrodos siguiendo el <span class="btn-link" onclick="scrollToSec('colocacion')">Mapa de Colocación</span>.</li>
+                <li><strong>Encendido:</strong> Pulse el botón central de encendido.</li>
+                <li><strong>Modo:</strong> Pulse <strong>MENU</strong> para elegir entre TENS, EMS o Masaje.</li>
+                <li><strong>Programa:</strong> Use las flechas para navegar por los programas (ej. P01). Confirme con <strong>ENTER</strong>.</li>
+                <li><strong>Intensidad:</strong> Suba la intensidad con los botones <strong>+/-</strong> del canal 1 (izquierda) o canal 2 (derecha).</li>
             </ol>
         </section>
 
         <section id="interfaz">
             <h2>3. Interfaz y Botones</h2>
-            <p>Como se muestra en la imagen <strong>dispositivo.png</strong>, el aparato cuenta con una pantalla retroiluminada en negativo para facilitar la lectura.</p>
+            <p>El dispositivo utiliza una pantalla en negativo (fondo negro, letras blancas). En la imagen <strong>dispositivo.png</strong> se detallan los controles.</p>
             <div class="img-container">
-                <img src="dispositivo.png" alt="Esquema del dispositivo">
-                <div class="caption">Referencia: dispositivo.png - Esquema de botones y display</div>
+                <img src="dispositivo.png" alt="Esquema del dispositivo beurer EM1R">
+                <div class="caption">Esquema del dispositivo (Imagen: dispositivo.png). Los cables conectan en la parte superior.</div>
             </div>
-            <p>Nota importante: Los conectores de los canales se encuentran en la parte superior del chasis.</p>
         </section>
 
         <section id="colocacion">
             <h2>4. Colocación de Electrodos</h2>
-            <p>La eficacia depende totalmente de la posición. Consulte la imagen <strong>colocacion.png</strong> para las cuadrículas exactas por zona corporal.</p>
+            <p>Coloque siempre los electrodos rodeando la zona de dolor o sobre el músculo a tratar. Consulte la guía visual:</p>
             <div class="img-container">
-                <img src="colocacion.png" alt="Mapa de colocación">
-                <div class="caption">Referencia: colocacion.png - Guía de electrodos por zona</div>
+                <img src="colocacion.png" alt="Guía de colocación de electrodos">
+                <div class="caption">Mapa de cuadrículas corporales (Imagen: colocacion.png).</div>
             </div>
         </section>
 
@@ -134,31 +141,30 @@
             <h3>Programas TENS (Dolor)</h3>
             <div class="table-wrapper">
                 <table>
-                    <thead><tr><th>Prog.</th><th>Indicación</th><th>Colocación</th></tr></thead>
+                    <thead><tr><th>Programa</th><th>Indicación / Síntoma</th><th>Colocación</th></tr></thead>
                     <tbody>
-                        <tr><td>P01-P02</td><td>Cervicales / Cefaleas</td><td><span class="btn-link" onclick="scrollToSec('colocacion')">Ver Cuello</span></td></tr>
-                        <tr><td>P03-P04</td><td>Espalda / Lumbar</td><td><span class="btn-link" onclick="scrollToSec('colocacion')">Ver Lumbar</span></td></tr>
-                        <tr><td>P05-P06</td><td>Hombro / Brazo</td><td><span class="btn-link" onclick="scrollToSec('colocacion')">Ver Hombro</span></td></tr>
-                        <tr><td>P07-P08</td><td>Dolor Articular / Artritis</td><td><span class="btn-link" onclick="scrollToSec('colocacion')">Ver Rodilla</span></td></tr>
-                        <tr><td>P09-P10</td><td>Neuralgias</td><td><span class="btn-link" onclick="scrollToSec('colocacion')">Zona afectada</span></td></tr>
-                        <tr><td>P11-P12</td><td>Dolor Menstrual</td><td><span class="btn-link" onclick="scrollToSec('colocacion')">Vientre bajo</span></td></tr>
-                        <tr><td>P13-P15</td><td>TENS Personalizado</td><td>Según dolor</td></tr>
+                        <tr><td>P01 - P02</td><td>Cuello, cervicales, cefaleas</td><td><span class="btn-link" onclick="scrollToSec('colocacion')">Ver Cuello</span></td></tr>
+                        <tr><td>P03 - P04</td><td>Espalda, lumbago, ciática</td><td><span class="btn-link" onclick="scrollToSec('colocacion')">Ver Lumbar</span></td></tr>
+                        <tr><td>P05 - P06</td><td>Hombros, brazos, codos</td><td><span class="btn-link" onclick="scrollToSec('colocacion')">Ver Hombro</span></td></tr>
+                        <tr><td>P07 - P08</td><td>Artritis, rodillas, articulaciones</td><td><span class="btn-link" onclick="scrollToSec('colocacion')">Ver Rodilla</span></td></tr>
+                        <tr><td>P11 - P12</td><td>Dolores menstruales (abdomen bajo)</td><td><span class="btn-link" onclick="scrollToSec('colocacion')">Ver Vientre</span></td></tr>
+                        <tr><td>P13 - P15</td><td>Programas configurables</td><td>Personalizado</td></tr>
                     </tbody>
                 </table>
             </div>
         </section>
 
         <section id="tabla-ems">
-            <h3>Programas EMS (Músculo)</h3>
+            <h3>Programas EMS (Muscular)</h3>
             <div class="table-wrapper">
                 <table>
-                    <thead><tr><th>Prog.</th><th>Objetivo</th><th>Colocación</th></tr></thead>
+                    <thead><tr><th>Programa</th><th>Objetivo del tratamiento</th><th>Colocación</th></tr></thead>
                     <tbody>
-                        <tr><td>P01-P06</td><td>Extremidades superiores</td><td><span class="btn-link" onclick="scrollToSec('colocacion')">Ver Brazo</span></td></tr>
-                        <tr><td>P07-P12</td><td>Abdominales / Lumbar</td><td><span class="btn-link" onclick="scrollToSec('colocacion')">Ver Tronco</span></td></tr>
-                        <tr><td>P13-P20</td><td>Extremidades inferiores</td><td><span class="btn-link" onclick="scrollToSec('colocacion')">Ver Muslo</span></td></tr>
-                        <tr><td>P21-P25</td><td>Capilarización / Calentamiento</td><td>Varios</td></tr>
-                        <tr><td>P26-P35</td><td>EMS Personalizado</td><td>Varios</td></tr>
+                        <tr><td>P01 - P06</td><td>Brazos (Bíceps/Tríceps) y Hombros</td><td><span class="btn-link" onclick="scrollToSec('colocacion')">Ver Brazo</span></td></tr>
+                        <tr><td>P07 - P12</td><td>Tronco, Abdominales y Lumbar</td><td><span class="btn-link" onclick="scrollToSec('colocacion')">Ver Tronco</span></td></tr>
+                        <tr><td>P13 - P20</td><td>Piernas (Muslos, Gemelos, Glúteos)</td><td><span class="btn-link" onclick="scrollToSec('colocacion')">Ver Muslo</span></td></tr>
+                        <tr><td>P21 - P25</td><td>Capilarización y Calentamiento</td><td>Varios</td></tr>
+                        <tr><td>P26 - P35</td><td>EMS Personalizado (Configurable)</td><td>Varios</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -168,12 +174,12 @@
             <h3>Programas MASAJE (Relajación)</h3>
             <div class="table-wrapper">
                 <table>
-                    <thead><tr><th>Prog.</th><th>Tipo de Masaje</th></tr></thead>
+                    <thead><tr><th>Programa</th><th>Tipo de Masaje / Sensación</th></tr></thead>
                     <tbody>
-                        <tr><td>P01-P05</td><td>Masaje por golpeteo</td></tr>
-                        <tr><td>P06-P10</td><td>Masaje por amasamiento</td></tr>
-                        <tr><td>P11-P15</td><td>Masaje por vibración</td></tr>
-                        <tr><td>P16-P20</td><td>Masaje relajante</td></tr>
+                        <tr><td>P01 - P05</td><td>Masaje por golpeteo (Tapping)</td></tr>
+                        <tr><td>P06 - P10</td><td>Masaje por amasamiento (Kneading)</td></tr>
+                        <tr><td>P11 - P15</td><td>Masaje por vibración profunda</td></tr>
+                        <tr><td>P16 - P20</td><td>Masaje relajante y calmante</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -181,8 +187,8 @@
 
         <section id="doctor-mode" class="doctor-box">
             <h2>Doctor's Mode</h2>
-            <p>Es una función especial que permite al médico o fisioterapeuta fijar un programa específico para que el paciente solo tenga que encender el aparato y subir la intensidad.</p>
-            <p><strong>Para activar:</strong> Seleccione su programa, ajuste parámetros y mantenga pulsado <strong>ENTER</strong> al iniciar. El símbolo del candado indica que el modo está activo. Para desactivar, repita el proceso de pulsación larga en ENTER.</p>
+            <p>Función para fijar un programa sugerido por su médico. Al activarlo, el usuario solo puede ajustar la intensidad.</p>
+            <p><strong>Activación:</strong> Elija el programa, ajuste los parámetros y mantenga pulsado <strong>ENTER</strong> durante 5 segundos. Aparecerá un candado en pantalla. Repita para desactivar.</p>
         </section>
 
     </main>
@@ -197,14 +203,15 @@
 
         function scrollToSec(id) {
             document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-            if (document.getElementById('sidebar').classList.contains('active')) toggleMenu();
+            if (window.innerWidth < 1000) toggleMenu();
         }
 
         function filterContent() {
             const input = document.getElementById('search-input').value.toLowerCase();
-            const sections = document.querySelectorAll('section');
+            const sections = document.querySelectorAll('main section');
             sections.forEach(sec => {
-                sec.classList.toggle('hidden', !sec.innerText.toLowerCase().includes(input));
+                const text = sec.innerText.toLowerCase();
+                sec.classList.toggle('hidden', !text.includes(input));
             });
         }
     </script>
